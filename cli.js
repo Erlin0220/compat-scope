@@ -40,8 +40,9 @@ async function main(){
   if(!count)throw Error('目录内没有 JS、CSS 或 HTML 构建产物：'+root);
   const payload={name:values.name??basename(root),version:dataVersion,files:count,rows:[...all.values()]};
   const template=await readFile(new URL('report.html',import.meta.url),'utf8');
+  const logo=await readFile(new URL('assets/compatscope.svg',import.meta.url),'base64');
   const json=JSON.stringify(payload).replaceAll('<','\\u003c').replaceAll('\u2028','\\u2028').replaceAll('\u2029','\\u2029');
-  await writeFile(output,template.replace('/*PAYLOAD*/null',()=>json));
+  await writeFile(output,template.replaceAll('COMPATSCOPE_LOGO','data:image/svg+xml;base64,'+logo).replace('/*PAYLOAD*/null',()=>json));
   console.log(count+' 个文件 · '+all.size+' 项能力 → '+output);
 }
 main().catch(e=>{console.error(e.message);process.exitCode=1});

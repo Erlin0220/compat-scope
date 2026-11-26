@@ -9,6 +9,7 @@
     "compat-scope": "cli.js"
   },
   "files": [
+    "assets/compatscope.svg",
     "cli.js",
     "scan.js",
     "report.html",
