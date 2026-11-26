@@ -2,9 +2,11 @@
 
 构建项目后运行 `compat-scope ./dist`，把生成的 `dist/compat.html` 放到网站上，或直接发给用户。这个单文件在打开它的浏览器里运行，不依赖服务器、CDN 或项目补丁。
 
-使用 Node.js 22.13+（22.x）或 24+。从本机项目接入：在业务仓库执行 `npm install -D /Volumes/KIOXIA-500G/project/compat-scope`。也可用 `npm install -D /path/to/compat-scope-0.1.0.tgz` 安装独立包，然后运行：
+使用 Node.js 22.13+（22.x）或 24+。在已构建的前端项目中运行，无需修改项目依赖：
 
-    npx compat-scope ./dist --name 我的项目
+    npx --yes --package=https://github.com/Erlin0220/compat-scope/releases/download/v0.1.0/compat-scope-0.1.0.tgz compat-scope ./dist --name 我的项目
+
+固定到项目时，可用项目自己的包管理器将[发布包](https://github.com/Erlin0220/compat-scope/releases/tag/v0.1.0)中的 `compat-scope-0.1.0.tgz` 安装为开发依赖，再用 `npm exec -- compat-scope ./dist` 或 `pnpm exec compat-scope ./dist` 生成报告。
 
 也可指定输出位置：`--out ./browser-check.html`。不指定输入时扫描当前目录下的 dist。命令不会覆盖非本工具生成的文件；重复运行会排除旧报告。
 
