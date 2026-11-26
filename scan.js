@@ -73,7 +73,8 @@ export function scan(files) {
           if(p?.length) {
             const last=p.at(-1), base=p.slice(0,-1).join('.');
             const owner=nested[base] ?? roots[base] ?? base;
-            const entry=p.length===1 ? bcd.api[last] ?? bcd.api.Window[last] ?? builtin[last] : bcd.api[owner]?.[last] ?? builtin[base]?.[last];
+            const staticMember=p.length===2 ? bcd.api[base]?.[last+'_static'] : undefined;
+            const entry=p.length===1 ? bcd.api[last] ?? bcd.api.Window[last] ?? builtin[last] : staticMember ?? bcd.api[owner]?.[last] ?? builtin[base]?.[last];
             if(entry?.__compat) { add(p.join('.'),builtin[base]?'JS 内置':'Web API',entry,['path',p,invoke],line); return; }
           }
           const owner=prototypes.get(key);
@@ -88,20 +89,19 @@ export function scan(files) {
     function stylesheet(code,offset=0) {
       const ast=css.parse(code,{positions:true});
       css.walk(ast,n=>{
-        const line=n.loc.start.line+offset;
         if(n.type==='PseudoClassSelector' && ['has','is','where','focus-visible'].includes(n.name)){
           const sel=':'+n.name+(n.name==='focus-visible'?'':'(*)');
-          add(':'+n.name,'CSS 选择器',bcd.css.selectors[n.name],['selector',sel],line);
+          add(':'+n.name,'CSS 选择器',bcd.css.selectors[n.name],['selector',sel],n.loc.start.line+offset);
         }
         if(n.type==='Declaration'){
           const samples={'aspect-ratio':'1 / 1','accent-color':'red','container-type':'inline-size','backdrop-filter':'blur(1px)','content-visibility':'auto'};
-          if(Object.hasOwn(samples,n.property)) add(n.property,'CSS 属性',bcd.css.properties[n.property],['css',n.property,samples[n.property]],line);
+          if(Object.hasOwn(samples,n.property)) add(n.property,'CSS 属性',bcd.css.properties[n.property],['css',n.property,samples[n.property]],n.loc.start.line+offset);
         }
         if(n.type==='Function'){
           const colors={'oklch':'oklch(50% 0.1 20)','oklab':'oklab(50% 0 0)','light-dark':'light-dark(black,white)','color-mix':'color-mix(in srgb,red,blue)'};
-          if(Object.hasOwn(colors,n.name)) add(n.name+'()','CSS 颜色',bcd.css.types.color[n.name],['css','color',colors[n.name]],line);
+          if(Object.hasOwn(colors,n.name)) add(n.name+'()','CSS 颜色',bcd.css.types.color[n.name],['css','color',colors[n.name]],n.loc.start.line+offset);
         }
-        if(n.type==='Atrule') add('@'+n.name,'CSS 规则',bcd.css['at-rules'][n.name],['at',n.name],line);
+        if(n.type==='Atrule') add('@'+n.name,'CSS 规则',bcd.css['at-rules'][n.name],['at',n.name],n.loc.start.line+offset);
       });
     }
     if(/\.m?js$/i.test(file)) js(content);
