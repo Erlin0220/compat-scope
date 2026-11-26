@@ -10,10 +10,12 @@
   },
   "files": [
     "assets/compatscope.svg",
+    "assets/report-preview.png",
     "cli.js",
     "scan.js",
     "report.html",
     "README.md",
+    "README.en.md",
     "NOTICE"
   ],
   "engines": {
