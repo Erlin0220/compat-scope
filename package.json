@@ -1,0 +1,32 @@
+{
+  "name": "compat-scope",
+  "description": "扫描前端构建产物，生成可离线打开的浏览器能力自检页",
+  "repository": "github:Erlin0220/compat-scope",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "compat-scope": "cli.js"
+  },
+  "files": [
+    "cli.js",
+    "scan.js",
+    "report.html",
+    "README.md",
+    "NOTICE"
+  ],
+  "engines": {
+    "node": "^22.13.0 || >=24"
+  },
+  "scripts": {
+    "test": "node --test test.js"
+  },
+  "dependencies": {
+    "@mdn/browser-compat-data": "8.1.10",
+    "acorn": "8.19.0",
+    "acorn-walk": "8.3.5",
+    "css-tree": "3.2.1",
+    "eslint-scope": "9.1.2",
+    "parse5": "8.1.1"
+  }
+}

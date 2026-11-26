@@ -1,0 +1,73 @@
+<!doctype html><!-- generated:compat-scope -->
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark"><link rel="icon" href="data:,"><title>故障排除信息 · CompatScope</title>
+<style>
+:root{color-scheme:light dark;--bg:#fff;--fg:#15141a;--rule:#d7d7db;--head:#f0f0f4;--button:#f0f0f4;--hover:#e0e0e6;--link:#0060df}*{box-sizing:border-box}
+body{background:#fff;background:var(--bg);color:#15141a;color:var(--fg);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;padding:40px 48px}h1{font-size:32px;font-weight:600;line-height:1.2;margin:0 0 16px}h2{font-size:18px;line-height:1.35;margin:2em 0 1em}h3{font-size:16px;margin:0 0 8px}a{color:#0060df;color:var(--link)}.header{display:flex;flex-wrap:wrap;gap:16px}.intro{flex:1 1 65%}.intro p{margin:0 0 24px}.action{flex:1 1 25%;border:1px solid #d7d7db;border-color:var(--rule);border-radius:4px;padding:12px}.action p{margin:0 0 12px}button,.button{font:inherit;color:inherit;display:inline-block;text-decoration:none;padding:6px 16px;border:0;border-radius:4px;background:#f0f0f4;background:var(--button);margin:0 8px 4px 0;cursor:pointer}button:hover,.button:hover{background:var(--hover)}button:focus-visible,a:focus-visible{outline:2px solid #0060df;outline-offset:2px}
+table{border-spacing:0;width:100%;font-size:14px;border:1px solid #d7d7db;border-color:var(--rule);border-radius:4px;overflow:hidden}td,th{border:1px solid #d7d7db;border-color:var(--rule);padding:4px;vertical-align:top;text-align:left}th{background:#f0f0f4;background:var(--head);font-weight:600}thead th{text-align:center}th.key{white-space:nowrap;width:1%}td{overflow-wrap:anywhere}.scroll{overflow-x:auto}.matrix{width:auto;min-width:100%}.matrix td:not(:first-child){text-align:center}.matrix th:not(:first-child){min-width:72px}.matrix tbody tr:nth-child(even),#list tr:nth-child(even){background:var(--head)}#list tr:nth-child(odd) .s2{background:#54ffbd}#list tr:nth-child(even) .s2{background:#b3ffe3}#list tr:nth-child(odd) .s0{background:#ffbdc5}#list tr:nth-child(even) .s0{background:#ffdfe7}.s1{background:#fff1b8}.s0,.s1,.s2{color:#15141a;text-align:center;white-space:nowrap}.nowrap{white-space:nowrap}.empty{text-align:center}nav{margin-bottom:8px}button[aria-pressed=true]{box-shadow:inset 0 -2px #0060df}footer{font-size:13px;margin-top:18px}textarea{display:block;width:100%;height:100px}#feedback{display:block}
+@media(max-width:640px){body{padding:24px 16px}.intro,.action{flex-basis:100%}h1{font-size:28px}#capabilities{min-width:530px}}
+@media(prefers-color-scheme:dark){:root{--bg:#1c1b22;--fg:#fbfbfe;--rule:#5b5b66;--head:#36353e;--button:#42414d;--hover:#52525e;--link:#80b5ff}}
+</style>
+<main><h1>故障排除信息</h1><div class="header"><div class="intro"><p>本页列出当前浏览器对项目所用技术的支持情况。遇到兼容性问题时，可将此页信息发送给开发者。<a href="#cap-section">查看能力检测结果</a></p><button id="raw">复制原始数据</button><button id="copy">复制文本到剪贴板</button><span id="feedback" role="status"></span></div><aside class="action"><h3>兼容性诊断</h3><p id="verdict" aria-live="polite">正在检测…</p><a class="button" id="save" download="compat-scope.txt">下载诊断信息</a></aside></div>
+<noscript>请启用 JavaScript 以检测当前浏览器的能力。</noscript>
+<h2>应用程序概要</h2><table><tbody><tr><th scope="row" class="key">项目名称</th><td id="project"></td></tr><tr><th scope="row" class="key">浏览器名称</th><td id="browser"></td></tr><tr><th scope="row" class="key">版本（浏览器自报）</th><td id="version"></td></tr><tr><th scope="row" class="key">用户代理</th><td id="ua"></td></tr><tr><th scope="row" class="key">检测范围</th><td id="counts"></td></tr><tr><th scope="row" class="key">兼容性数据</th><td id="bcd"></td></tr></tbody></table>
+<h2 id="cap-section">浏览器能力检测</h2><nav aria-label="筛选检测结果" id="filters"></nav><div class="scroll"><table id="capabilities"><thead><tr><th>能力或方法</th><th>当前环境</th><th>类型</th><th>构建产物位置</th></tr></thead><tbody id="list"></tbody></table></div>
+<h2>各浏览器原生支持起始版本</h2><div class="scroll"><table class="matrix"><thead><tr id="matrixhead"><th>能力或方法</th></tr></thead><tbody id="matrix"></tbody></table></div><footer id="foot"></footer></main>
+<script>
+(function(){
+'use strict';
+var data=/*PAYLOAD*/null;
+var names=['未提供','未确认','已提供'], agents=['Chrome','Edge','Firefox','Safari','iOS Safari','Android Chrome','Android Firefox','Samsung Internet','Android WebView','iOS WebView'];
+var counts=[0,0,0], results=[], filters=[], selected=-1;
+function el(id){return document.getElementById(id)}
+function make(tag,text,cls){var x=document.createElement(tag);if(text!==null)x.textContent=text;if(cls)x.className=cls;return x}
+function probe(p){
+ try{
+  if(p[0]==='path'){
+    var obj=window,keys=p[1],i;
+    for(i=0;i<keys.length-1;i++){obj=obj[keys[i]];if(obj==null)return 0}
+    var last=keys[keys.length-1];return (p[2]?typeof obj[last]==='function':last in Object(obj))?2:0;
+  }
+  if(p[0]==='element')return p[2] in document.createElement(p[1])?2:0;
+  if(p[0]==='css')return window.CSS && typeof CSS.supports==='function'?(CSS.supports(p[1],p[2])?2:0):1;
+  if(p[0]==='selector'){try{document.querySelector(p[1]);return 2}catch(e){return e.name==='SyntaxError'?0:1}}
+  if(p[0]==='syntax'){try{Function(p[1]);return 2}catch(e){return e.name==='SyntaxError'?0:1}}
+  if(p[0]==='at'){
+    var definitions={container:['CSSContainerRule','@container (min-width:1px) {}'],layer:['CSSLayerBlockRule','@layer compatcheck {}'],scope:['CSSScopeRule','@scope (.x) {}'],'starting-style':['CSSStartingStyleRule','@starting-style {}']};
+    var spec=definitions[p[1]];if(!spec)return 1;
+    var style=document.createElement('style');document.head.appendChild(style);
+    try{if(!style.sheet)return 1;style.sheet.insertRule(spec[1],0);var rule=style.sheet.cssRules[0];return typeof window[spec[0]]==='function' && rule instanceof window[spec[0]]?2:1}
+    catch(e){return e.name==='SyntaxError'?0:1}finally{style.parentNode.removeChild(style)}
+  }
+ }catch(e){return 1}
+ return 1;
+}
+var ua=navigator.userAgent,patterns=[['Edge',/(?:EdgA|EdgiOS|Edg|Edge)\/([\d.]+)/],['Samsung Internet',/SamsungBrowser\/([\d.]+)/],['Opera',/OPR\/([\d.]+)/],['Firefox',/(?:Firefox|FxiOS)\/([\d.]+)/],['Android WebView',/; wv\).*Chrome\/([\d.]+)/],['Chrome',/(?:Chrome|CriOS)\/([\d.]+)/],['Safari',/Version\/([\d.]+).*Safari/],['Internet Explorer',/Trident\/.*rv:([\d.]+)/]],browser='浏览器型号未识别';
+for(var i=0;i<patterns.length;i++){var m=patterns[i][1].exec(ua);if(m){browser=patterns[i][0]+' '+m[1];break}}
+el('browser').textContent=m?patterns[i][0]:browser;el('version').textContent=m?m[1]:'未识别';el('project').textContent=data.name;el('ua').textContent=ua;el('bcd').textContent='MDN Browser Compat Data '+data.version;
+for(i=0;i<data.rows.length;i++){var r=data.rows[i],state=probe(r.probe);counts[state]++;results.push({r:r,s:state})}
+results.sort(function(a,b){return a.s-b.s || a.r.label.localeCompare(b.r.label)});
+var verdict=!results.length?'未识别到规则覆盖的能力':counts[0]?'当前环境缺少 '+counts[0]+' 项能力':counts[1]?'未发现明确缺失，仍有 '+counts[1]+' 项未确认':'当前环境提供了全部 '+counts[2]+' 项已识别能力';
+el('verdict').textContent=verdict;
+var summary='扫描 '+data.files+' 个文件 · 已提供 '+counts[2]+' 项 · 未提供 '+counts[0]+' 项 · 未确认 '+counts[1]+' 项';
+el('counts').textContent=summary;el('foot').textContent='版本数据：MDN BCD '+data.version+'。仅检查本页环境，不加载项目代码。原型方法按名称匹配，同名业务方法也可能命中。';
+var lines=[data.name,browser,ua,verdict,summary,'MDN BCD '+data.version,''];
+function draw(){
+ var box=el('list');box.textContent='';
+ for(var j=0;j<results.length;j++){var item=results[j],row=item.r;if(selected!==-1&&item.s!==selected)continue;
+ var tr=make('tr',null),loc=make('td',null);tr.appendChild(make('td',row.label));tr.appendChild(make('td',names[item.s],'s'+item.s));tr.appendChild(make('td',row.category));for(var k=0;k<row.locations.length;k++)loc.appendChild(make('div',row.locations[k]));tr.appendChild(loc);box.appendChild(tr);
+ }
+ if(!box.firstChild){var empty=make('tr',null),td=make('td','此分类没有记录。','empty');td.colSpan=4;empty.appendChild(td);box.appendChild(empty)}
+ for(j=0;j<filters.length;j++)filters[j].setAttribute('aria-pressed',String(filters[j].value==selected));
+}
+function filter(value,title){var b=make('button',title);b.value=String(value);b.onclick=function(){selected=value;draw()};filters.push(b);el('filters').appendChild(b)}
+filter(-1,'全部 '+results.length);for(i=0;i<3;i++)filter(i,names[i]+' '+counts[i]);draw();
+for(i=0;i<results.length;i++){var item=results[i],row=item.r;lines.push('['+names[item.s]+'] '+row.label+' · '+row.category,agents.map(function(a,k){return a+' '+row.support[k]}).join(' / '),row.locations.join('\n'),'')}
+var diagnostic=lines.join('\n');
+for(i=0;i<agents.length;i++)el('matrixhead').appendChild(make('th',agents[i]));
+for(i=0;i<results.length;i++){var rr=results[i].r,tr=make('tr',null);tr.appendChild(make('td',rr.label));for(var k=0;k<agents.length;k++)tr.appendChild(make('td',rr.support[k]));el('matrix').appendChild(tr)}
+function copy(text){var t=make('textarea',null);t.value=text;t.setAttribute('aria-label','可手动复制的诊断结果');el('feedback').textContent='';el('feedback').appendChild(t);t.select();try{if(document.execCommand('copy')){el('feedback').textContent='已复制';return}}catch(e){}t.focus();t.select();}
+el('copy').onclick=function(){copy(diagnostic)};
+el('raw').onclick=function(){copy(JSON.stringify({project:data.name,browser:browser,userAgent:ua,bcd:data.version,scannedFiles:data.files,browsers:agents,features:results.map(function(item){return {name:item.r.label,status:names[item.s],category:item.r.category,locations:item.r.locations,versions:item.r.support}})},null,2))};
+var save=el('save');if(window.URL && URL.createObjectURL && window.Blob)save.href=URL.createObjectURL(new Blob([diagnostic],{type:'text/plain;charset=utf-8'}));else save.href='data:text/plain;charset=utf-8,'+encodeURIComponent(diagnostic);
+}());
+</script></html>
